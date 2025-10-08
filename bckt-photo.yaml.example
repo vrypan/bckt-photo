@@ -1,0 +1,16 @@
+# Configuration file for bckt-photo
+# Copy this file to bckt-photo.yaml and customize it
+
+# Directory where posts will be created
+posts_dir: posts
+
+# Map EXIF fields to tag names
+# EXIF field names: https://github.com/rwcarlsen/goexif/blob/master/exif/fields.go
+exif_to_tags:
+  Make: camera-make
+  Model: camera-model
+  ISOSpeedRatings: iso
+  FNumber: aperture
+  ExposureTime: shutter-speed
+  FocalLength: focal-length
+  LensModel: lens

@@ -1,0 +1,26 @@
+# Binaries
+bckt-photo
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binary
+*.test
+
+# Output of the go coverage tool
+*.out
+
+# Go workspace file
+go.work
+
+# User config
+bckt-photo.yaml
+
+# Generated posts
+posts/
+
+# OS specific
+.DS_Store
+Thumbs.db
