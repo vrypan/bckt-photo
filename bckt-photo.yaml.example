@@ -1,16 +1,113 @@
-# Configuration file for bckt-photo
+# bckt-photo configuration file example
 # Copy this file to bckt-photo.yaml and customize it
 
-# Directory where posts will be created
+# Directory where blog posts will be created (optional, defaults to "posts")
 posts_dir: posts
 
-# Map EXIF fields to tag names
-# EXIF field names: https://github.com/rwcarlsen/goexif/blob/master/exif/fields.go
+# Map EXIF fields to frontmatter field names
+# Format: fieldname: [list of EXIF tags to try in priority order]
+# The first EXIF tag that exists and has a value will be used
+#
+# Common EXIF field names reference:
+# https://exiftool.org/TagNames/EXIF.html
 exif_to_tags:
-  Make: camera-make
-  Model: camera-model
-  ISOSpeedRatings: iso
-  FNumber: aperture
-  ExposureTime: shutter-speed
-  FocalLength: focal-length
-  LensModel: lens
+  # ISO speed - most cameras use ISOSpeedRatings, some newer use PhotographicSensitivity
+  iso:
+    - ISOSpeedRatings
+    - PhotographicSensitivity
+    - ISO
+
+  # Aperture (f-number like f/2.8, f/5.6, etc.)
+  aperture:
+    - FNumber
+    - ApertureValue
+
+  # Shutter speed / Exposure time (like 1/1000, 1/60, etc.)
+  exposure:
+    - ExposureTime
+    - ShutterSpeedValue
+
+  # Focal length in millimeters
+  focal_length:
+    - FocalLength
+    - FocalLengthIn35mmFilm
+
+  # Lens model/name
+  # Different manufacturers use different field names
+  lens:
+    - LensModel
+    - Lens
+    - LensInfo
+
+  # Camera model
+  camera:
+    - Model
+    - CameraModelName
+
+  # Camera make/manufacturer
+  make:
+    - Make
+
+  # IMPORTANT: Special field names
+  # The following field names receive automatic user-friendly formatting:
+  # - aperture: Creates "aperture-friendly" field (e.g., f/1.6) and uses friendly format in tags
+  # - exposure: Creates "exposure-friendly" field (e.g., 1/63s) and uses friendly format in tags
+  # - focal_length: Creates "focal_length-friendly" field (e.g., 4.2mm) and uses friendly format in tags
+  #
+  # If you rename these fields, you will lose the automatic friendly formatting,
+  # but the raw fractional values will still be extracted correctly.
+
+  # Optional: Additional fields you might want to extract
+  #
+  # White balance
+  # white_balance:
+  #   - WhiteBalance
+  #
+  # Metering mode
+  # metering:
+  #   - MeteringMode
+  #
+  # Flash
+  # flash:
+  #   - Flash
+  #
+  # Exposure compensation
+  # exposure_comp:
+  #   - ExposureCompensation
+  #
+  # GPS coordinates (if available)
+  # gps_latitude:
+  #   - GPSLatitude
+  # gps_longitude:
+  #   - GPSLongitude
+
+# Example output frontmatter:
+# ---
+# date: 2025-10-07 14:30:00
+# slug: photo-1728311400
+# tags:
+#   - "125"
+#   - f/1.6
+#   - 1/63s
+#   - 4.2mm
+#   - iPhone 12 mini back dual wide camera 4.2mm f/1.6
+#   - iPhone 12 mini
+#   - Apple
+# type: photo
+# attached:
+#   - image.jpg
+#   - image-thumb.jpg
+# image: image.jpg
+# thumb: image-thumb.jpg
+# language: en
+# iso: "125"
+# aperture: 8/5
+# aperture-friendly: f/1.6
+# exposure: 1/63
+# exposure-friendly: 1/63s
+# focal_length: 21/5
+# focal_length-friendly: 4.2mm
+# lens: iPhone 12 mini back dual wide camera 4.2mm f/1.6
+# camera: iPhone 12 mini
+# make: Apple
+# ---
