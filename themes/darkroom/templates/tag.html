@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block page_title %}{{ tag }} · {{ config.title | default("darkroom") }}{% endblock page_title %}
+
+{% block content %}
+<h2>#{{ tag }}</h2>
+
+<div class="photo-grid">
+{% for post in posts %}
+{% if post.type == 'photo' %}
+{% include "partials/summary-photo.html" %}
+{% else %}
+{% include "partials/summary-default.html" %}
+{% endif %}
+{% else %}
+<p class="no-posts">No posts with this tag.</p>
+{% endfor %}
+</div>
+
+{% if pagination.total > 1 %}
+<nav class="pagination">
+<span class="page-info">Page {{ pagination.current }} of {{ pagination.total }}</span>
+{% if pagination.prev %}<a href="{{ pagination.prev | safe }}" class="prev">← Newer</a>{% endif %}
+{% if pagination.next %}<a href="{{ pagination.next | safe }}" class="next">Older →</a>{% endif %}
+</nav>
+{% endif %}
+{% endblock content %}

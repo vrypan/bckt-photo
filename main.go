@@ -353,7 +353,7 @@ func extractExifFields(ifd *exif.Ifd, exifToTags map[string][]string) map[string
 				// Add friendly version for specific fields
 				friendly := formatFriendlyValue(fieldName, value)
 				if friendly != "" && friendly != value {
-					fields[fieldName+"-friendly"] = friendly
+					fields[fieldName+"_friendly"] = friendly
 				}
 				break // Found a value, move to next field
 			}

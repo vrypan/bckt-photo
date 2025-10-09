@@ -50,9 +50,9 @@ exif_to_tags:
 
   # IMPORTANT: Special field names
   # The following field names receive automatic user-friendly formatting:
-  # - aperture: Creates "aperture-friendly" field (e.g., f/1.6) and uses friendly format in tags
-  # - exposure: Creates "exposure-friendly" field (e.g., 1/63s) and uses friendly format in tags
-  # - focal_length: Creates "focal_length-friendly" field (e.g., 4.2mm) and uses friendly format in tags
+  # - aperture: Creates "aperture_friendly" field (e.g., f/1.6) and uses friendly format in tags
+  # - exposure: Creates "exposure_friendly" field (e.g., 1/63s) and uses friendly format in tags
+  # - focal_length: Creates "focal_length_friendly" field (e.g., 4.2mm) and uses friendly format in tags
   #
   # If you rename these fields, you will lose the automatic friendly formatting,
   # but the raw fractional values will still be extracted correctly.
@@ -102,11 +102,11 @@ exif_to_tags:
 # language: en
 # iso: "125"
 # aperture: 8/5
-# aperture-friendly: f/1.6
+# aperture_friendly: f/1.6
 # exposure: 1/63
-# exposure-friendly: 1/63s
+# exposure_friendly: 1/63s
 # focal_length: 21/5
-# focal_length-friendly: 4.2mm
+# focal_length_friendly: 4.2mm
 # lens: iPhone 12 mini back dual wide camera 4.2mm f/1.6
 # camera: iPhone 12 mini
 # make: Apple

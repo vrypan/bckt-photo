@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block page_title %}Search · {{ config.title | default("darkroom") }}{% endblock page_title %}
+
+{% block content %}
+<div class="search-page">
+<h2>Search</h2>
+<div id="search-results"></div>
+</div>
+{% endblock content %}
+
+{% block page_scripts %}
+<script src="/search-index.js"></script>
+<script>
+// Simple search implementation
+if (window.searchIndex) {
+  const urlParams = new URLSearchParams(window.location.search);
+  const query = urlParams.get('q');
+
+  if (query) {
+    const results = searchIndex.filter(post => {
+      const searchText = post.search_text.toLowerCase();
+      return searchText.includes(query.toLowerCase());
+    });
+
+    const resultsDiv = document.getElementById('search-results');
+    if (results.length > 0) {
+      resultsDiv.innerHTML = '<h3>Results for "' + query + '"</h3>' +
+        results.map(post =>
+          '<article class="text-post">' +
+          '<h4><a href="' + post.permalink + '">' + (post.title || 'Untitled') + '</a></h4>' +
+          '<time>' + post.date + '</time>' +
+          '</article>'
+        ).join('');
+    } else {
+      resultsDiv.innerHTML = '<p class="no-posts">No results found for "' + query + '"</p>';
+    }
+  } else {
+    document.getElementById('search-results').innerHTML =
+      '<p class="no-posts">Enter a search query</p>';
+  }
+}
+</script>
+{% endblock page_scripts %}
