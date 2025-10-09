@@ -12,8 +12,10 @@ A command line tool written in Go that creates [bckt](https://github.com/vrypan/
 - Automatically generates thumbnails (max 800x800 pixels)
 - **Configurable EXIF field to tag mapping with priority fallbacks**
 - **EXIF fields become individual frontmatter fields** for templates
+- **Add custom tags to all posts** - perfect for batch processing (e.g., "summer2025", "vacation")
 - Supports optional post titles
 - Uses image date from EXIF data, falls back to current time
+- **Modular codebase** - organized into focused modules for maintainability
 
 ## Installation
 
@@ -48,6 +50,7 @@ When processing a directory, the tool will:
 - `-c, --config`: Path to config file (default: `bckt-photo.yaml`)
 - `-p, --posts`: Posts directory (default: `posts`)
 - `-l, --lang`: Post language (default: `en`)
+- `-g, --tags`: Extra tags to add to all posts (comma-separated or multiple flags)
 
 ### Examples
 
@@ -64,6 +67,18 @@ bckt-photo -i ~/Photos/Vacation2025
 Use a custom config and posts directory:
 ```bash
 bckt-photo -i photo.jpg -c my-config.yaml -p /path/to/posts
+```
+
+Add custom tags to all processed photos:
+```bash
+# Single tag
+bckt-photo -i ~/Photos/Summer --tags summer2025
+
+# Multiple tags (comma-separated)
+bckt-photo -i ~/Photos/Summer --tags summer2025,vacation,beach
+
+# Multiple tags (using flag multiple times)
+bckt-photo -i ~/Photos/Summer -g summer2025 -g vacation
 ```
 
 ## Configuration
@@ -194,7 +209,7 @@ The markdown file includes YAML front matter with:
 - `title`: Post title (if provided)
 - `date`: Extracted from image EXIF data (or current time)
 - `slug`: Generated from title or timestamp
-- `tags`: Array of values extracted from EXIF fields
+- `tags`: Array of values extracted from EXIF fields plus any custom tags (--tags flag)
 - `type`: Set to "photo"
 - `attached`: List containing original image and thumbnail filenames
 - `image`: Original image filename
@@ -214,6 +229,7 @@ Each EXIF field mapped in the config becomes its own frontmatter field. For exam
 
 ### Example Output
 
+Without custom tags:
 ```yaml
 ---
 date: 2025-10-07 14:30:00
@@ -246,6 +262,26 @@ make: Canon
 ---
 ```
 
+With custom tags (e.g., `--tags summer2025,vacation`):
+```yaml
+---
+date: 2025-10-07 14:30:00
+slug: photo-1728311400
+tags:
+  - ISO 400
+  - f/5.6
+  - 1/500s
+  - 200.0mm
+  - RF 100-500mm F4.5-7.1 L IS USM
+  - Canon EOS R5
+  - Canon
+  - summer2025
+  - vacation
+type: photo
+# ... rest of the fields
+---
+```
+
 ## Image Format Support
 
 The tool uses the [dsoprea/go-exif](https://github.com/dsoprea/go-exif) library, which supports:
@@ -254,6 +290,20 @@ The tool uses the [dsoprea/go-exif](https://github.com/dsoprea/go-exif) library,
 - Other formats supported by the library
 
 If an image doesn't have EXIF data, the tool will show a warning but continue processing, using the current timestamp for the date.
+
+## Code Structure
+
+The codebase is organized into focused modules for better maintainability:
+
+- **`main.go`** (70 lines) - CLI setup, flags, and entry point
+- **`config.go`** - Configuration loading and structs
+- **`exif.go`** - EXIF reading, extraction, and formatting
+- **`image.go`** - Image operations (copy, thumbnail generation)
+- **`post.go`** - Post creation and frontmatter generation
+- **`processor.go`** - Photo processing orchestration
+- **`utils.go`** - Helper utilities (slug generation, file type detection)
+
+This modular structure makes the codebase easier to understand, test, and maintain.
 
 ## Dependencies
 
