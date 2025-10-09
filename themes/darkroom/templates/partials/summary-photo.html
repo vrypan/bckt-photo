@@ -1,0 +1,20 @@
+<article class="photo-card">
+<a href="{{ post.permalink | safe }}" class="photo-link">
+<div class="photo-image">
+{% if post.image %}
+<img src="{{ post.permalink | safe }}{{ post.image }}" alt="{{ post.title | default('Photo') }}" loading="lazy">
+{% endif %}
+</div>
+<div class="photo-overlay">
+{% if post.title %}<h3>{{ post.title }}</h3>{% endif %}
+{% if post.camera %}<div class="camera-model">{{ post.camera }}</div>{% endif %}
+<div class="photo-specs">
+{% if post.focal_length_friendly %}<div>{{ post.focal_length_friendly }}</div>{% endif %}
+{% if post.aperture_friendly %}<div>{{ post.aperture_friendly }}</div>{% endif %}
+{% if post.exposure_friendly %}<div>{{ post.exposure_friendly }}</div>{% endif %}
+{% if post.iso %}<div>ISO {{ post.iso }}</div>{% endif %}
+</div>
+<time datetime="{{ post.date_iso }}">{{ post.date }}</time>
+</div>
+</a>
+</article>

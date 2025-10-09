@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block page_title %}{{ year }} · {{ config.title | default("darkroom") }}{% endblock page_title %}
+
+{% block content %}
+<h2>{{ year }}</h2>
+
+<div class="photo-grid">
+{% for post in posts %}
+{% if post.type == 'photo' %}
+{% include "partials/summary-photo.html" %}
+{% else %}
+{% include "partials/summary-default.html" %}
+{% endif %}
+{% else %}
+<p class="no-posts">No posts from this year.</p>
+{% endfor %}
+</div>
+
+{% endblock content %}

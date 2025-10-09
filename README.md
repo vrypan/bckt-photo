@@ -129,11 +129,11 @@ This ensures compatibility across different camera manufacturers and models.
 
 **Important:** The following field names receive special formatting treatment and should not be renamed:
 
-- **`aperture`**: Generates user-friendly format (e.g., `f/1.6`) in tags and creates an `aperture-friendly` field
-- **`exposure`**: Generates user-friendly format (e.g., `1/63s`) in tags and creates an `exposure-friendly` field
-- **`focal_length`**: Generates user-friendly format (e.g., `4.2mm`) in tags and creates a `focal_length-friendly` field
+- **`aperture`**: Generates user-friendly format (e.g., `f/1.6`) in tags and creates an `aperture_friendly` field
+- **`exposure`**: Generates user-friendly format (e.g., `1/63s`) in tags and creates an `exposure_friendly` field
+- **`focal_length`**: Generates user-friendly format (e.g., `4.2mm`) in tags and creates a `focal_length_friendly` field
 
-These fields store raw fractional values (e.g., `8/5`, `1/63`, `21/5`) in the main frontmatter fields, while the `-friendly` variants contain human-readable formats. Tags automatically use the friendly versions.
+These fields store raw fractional values (e.g., `8/5`, `1/63`, `21/5`) in the main frontmatter fields, while the `_friendly` variants contain human-readable formats. Tags automatically use the friendly versions.
 
 If you rename these fields in your config, you will lose the automatic friendly formatting, but the raw values will still be extracted correctly.
 
@@ -235,11 +235,11 @@ thumb: image-thumb.jpg
 language: en
 iso: "400"
 aperture: 28/5
-aperture-friendly: f/5.6
+aperture_friendly: f/5.6
 exposure: 1/500
-exposure-friendly: 1/500s
+exposure_friendly: 1/500s
 focal_length: 200/1
-focal_length-friendly: 200.0mm
+focal_length_friendly: 200.0mm
 lens: RF 100-500mm F4.5-7.1 L IS USM
 camera: Canon EOS R5
 make: Canon
