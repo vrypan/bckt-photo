@@ -291,20 +291,6 @@ The tool uses the [dsoprea/go-exif](https://github.com/dsoprea/go-exif) library,
 
 If an image doesn't have EXIF data, the tool will show a warning but continue processing, using the current timestamp for the date.
 
-## Code Structure
-
-The codebase is organized into focused modules for better maintainability:
-
-- **`main.go`** (70 lines) - CLI setup, flags, and entry point
-- **`config.go`** - Configuration loading and structs
-- **`exif.go`** - EXIF reading, extraction, and formatting
-- **`image.go`** - Image operations (copy, thumbnail generation)
-- **`post.go`** - Post creation and frontmatter generation
-- **`processor.go`** - Photo processing orchestration
-- **`utils.go`** - Helper utilities (slug generation, file type detection)
-
-This modular structure makes the codebase easier to understand, test, and maintain.
-
 ## Dependencies
 
 - [github.com/disintegration/imaging](https://github.com/disintegration/imaging) - Image processing and thumbnail generation
