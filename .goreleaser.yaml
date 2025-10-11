@@ -1,0 +1,73 @@
+# GoReleaser v1 configuration for bckt-photo
+version: 1
+
+before:
+  hooks:
+    - go mod tidy
+
+builds:
+  - id: bckt-photo
+    binary: bckt-photo
+    main: ./main.go
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - darwin
+      - linux
+    goarch:
+      - amd64
+      - arm64
+    ldflags:
+      - -s -w
+      - -X main.version={{.Version}}
+      - -X main.commit={{.Commit}}
+      - -X main.date={{.Date}}
+
+archives:
+  - id: default
+    format: tar.gz
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    format_overrides:
+      - goos: windows
+        format: zip
+    files:
+      - README.md
+      - LICENSE
+      - bckt-photo.yaml.example
+
+checksum:
+  name_template: "checksums.txt"
+  algorithm: sha256
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
+      - '^chore:'
+      - Merge pull request
+      - Merge branch
+
+brews:
+  - name: bckt-photo
+    repository:
+      owner: vrypan
+      name: homebrew-bckt-photo
+      token: "{{ .Env.GITHUB_TOKEN }}"
+    folder: Formula
+    homepage: https://github.com/vrypan/bckt-photo
+    description: "A photo processing tool for bckt"
+    license: MIT
+    install: |
+      bin.install "bckt-photo"
+      (etc/"bckt-photo").install "bckt-photo.yaml.example"
+    test: |
+      system "#{bin}/bckt-photo", "--version"
+
+release:
+  github:
+    owner: vrypan
+    name: bckt-photo
+  draft: false
+  prerelease: auto
