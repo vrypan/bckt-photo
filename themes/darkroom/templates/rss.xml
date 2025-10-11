@@ -1,18 +1,22 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-<channel>
-<title>{{ config.title | default("darkroom") }}</title>
-<link>{{ base_url }}</link>
-<description>{{ config.subtitle | default("") }}</description>
-<atom:link href="{{ base_url }}/rss.xml" rel="self" type="application/rss+xml" />
-{% for post in posts %}
-<item>
-<title>{{ post.title | default("Photo") }}</title>
-<link>{{ base_url }}{{ post.permalink }}</link>
-<guid>{{ base_url }}{{ post.permalink }}</guid>
-<pubDate>{{ post.date_rfc2822 }}</pubDate>
-<description><![CDATA[{{ post.body | safe }}]]></description>
-</item>
-{% endfor %}
-</channel>
+{% autoescape false %}<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>{{ feed.title }}</title>
+    <link>{{ feed.site_url }}</link>
+    <description>{{ feed.description }}</description>
+    <lastBuildDate>{{ feed.updated }}</lastBuildDate>
+    <generator>bckt</generator>
+    <atom:link href="{{ feed.feed_url }}" rel="self" type="application/rss+xml"/>
+    {% for item in feed.items %}
+    <item>
+      <title>{{ item.title }}</title>
+      <link>{{ item.link }}</link>
+      <guid isPermaLink="true">{{ item.guid }}</guid>
+      <pubDate>{{ item.pub_date }}</pubDate>
+      <description>{{ item.description }}</description>
+      <content:encoded><![CDATA[{{ item.content | safe }}]]></content:encoded>
+    </item>
+    {% endfor %}
+  </channel>
 </rss>
+{% endautoescape %}
