@@ -8,6 +8,12 @@ import (
 )
 
 var (
+	// Version information (set by GoReleaser)
+	version = "dev"
+	commit  = "none"
+	date    = "unknown"
+
+	// CLI flags
 	imageFile  string
 	title      string
 	configFile string
@@ -17,10 +23,11 @@ var (
 )
 
 var rootCmd = &cobra.Command{
-	Use:   "bckt-photo",
-	Short: "Create bckt blog posts from images with EXIF data",
-	Long:  `bckt-photo reads EXIF data from images and creates bckt-formatted blog posts with front matter.`,
-	RunE:  run,
+	Use:     "bckt-photo",
+	Short:   "Create bckt blog posts from images with EXIF data",
+	Long:    `bckt-photo reads EXIF data from images and creates bckt-formatted blog posts with front matter.`,
+	RunE:    run,
+	Version: version,
 }
 
 func init() {
@@ -31,6 +38,9 @@ func init() {
 	rootCmd.Flags().StringVarP(&language, "lang", "l", "en", "Post language")
 	rootCmd.Flags().StringSliceVarP(&extraTags, "tags", "g", []string{}, "Extra tags to add to all posts (comma-separated or multiple flags)")
 	rootCmd.MarkFlagRequired("image")
+
+	// Custom version template
+	rootCmd.SetVersionTemplate(fmt.Sprintf("bckt-photo version %s (commit: %s, built: %s)\n", version, commit, date))
 }
 
 func main() {
