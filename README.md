@@ -13,6 +13,7 @@ A command line tool written in Go that creates [bckt](https://github.com/vrypan/
 - **Configurable EXIF field to tag mapping with priority fallbacks**
 - **EXIF fields become individual frontmatter fields** for templates
 - **Add custom tags to all posts** - perfect for batch processing (e.g., "summer2025", "vacation")
+- **Path-based metadata templating** - generate titles and tags from directory structure and filenames
 - Supports optional post titles
 - Uses image date from EXIF data, falls back to current time
 - **Modular codebase** - organized into focused modules for maintainability
@@ -68,11 +69,11 @@ When processing a directory, the tool will:
 ### Options
 
 - `-i, --image` (required): Path to image file or directory
-- `-t, --title`: Post title (optional, only used for single images)
+- `-t, --title`: Post title (literal or template using @keywords like @dir1, @basename)
 - `-c, --config`: Path to config file (default: `bckt-photo.yaml`)
 - `-p, --posts`: Posts directory (default: `posts`)
 - `-l, --lang`: Post language (default: `en`)
-- `-g, --tags`: Extra tags to add to all posts (comma-separated or multiple flags)
+- `-g, --tags`: Tags (literal or templates with @keywords, comma-separated or multiple flags)
 
 ### Examples
 
@@ -103,6 +104,25 @@ bckt-photo -i ~/Photos/Summer --tags summer2025,vacation,beach
 bckt-photo -i ~/Photos/Summer -g summer2025 -g vacation
 ```
 
+Use path-based templates for titles and tags:
+```bash
+# Generate title from directory and filename (template auto-detected with @)
+bckt-photo -i ~/Photos/2025/vacation/beach.jpg -t "@dir2 @dir1 - @basename"
+# Result: "2025 vacation - beach"
+
+# Generate tags from directory structure
+bckt-photo -i ~/Photos/2025/vacation/ -g "@dir2" -g "@dir1"
+# Each photo gets tags: "2025", "vacation"
+
+# Combine directory parts in tags
+bckt-photo -i ~/Photos/2025/vacation/ -g "@dir2/@dir1"
+# Each photo gets tag: "2025/vacation"
+
+# Mix literal and template tags
+bckt-photo -i ~/Photos/2025/vacation/ -g summer -g "@dir1"
+# Each photo gets tags: "summer", "vacation"
+```
+
 ## Configuration
 
 Copy `bckt-photo.yaml.example` to `bckt-photo.yaml` and customize:
@@ -110,6 +130,17 @@ Copy `bckt-photo.yaml.example` to `bckt-photo.yaml` and customize:
 ```yaml
 # Directory where posts will be created
 posts_dir: posts
+
+# Metadata templates - use @keywords to generate titles and tags from path
+# Keywords: @dir1 (closest directory to file), @dir2, @dir3, ..., @filename, @basename, @ext
+metadata:
+  # Title template - generates post title from path components
+  title: "@dir1 - @basename"
+
+  # Tag templates - generates tags from path components (list)
+  tags:
+    - "@dir1"        # Tag from closest directory
+    - "@dir2/@dir1"  # Tag from parent/child directories
 
 # Map EXIF fields to frontmatter field names
 # Format: fieldname: [list of EXIF tags to try in priority order]
@@ -173,6 +204,67 @@ This ensures compatibility across different camera manufacturers and models.
 These fields store raw fractional values (e.g., `8/5`, `1/63`, `21/5`) in the main frontmatter fields, while the `_friendly` variants contain human-readable formats. Tags automatically use the friendly versions.
 
 If you rename these fields in your config, you will lose the automatic friendly formatting, but the raw values will still be extracted correctly.
+
+### Path-Based Metadata Templating
+
+You can generate titles and tags dynamically from the file path and filename using template keywords. This is especially useful when batch processing photos organized in directories.
+
+**Available Keywords:**
+- `@dir1` - Closest directory to the file (parent directory)
+- `@dir2` - Second-to-last directory
+- `@dir3` - Third-to-last directory
+- (and so on...)
+- `@filename` - Full filename with extension (e.g., `beach.jpg`)
+- `@basename` - Filename without extension (e.g., `beach`)
+- `@ext` - File extension without dot (e.g., `jpg`)
+
+**Note:** Directory numbering is reversed so `@dir1` is always the directory closest to the file, making templates more predictable.
+
+**Example:**
+
+For a file at `/photos/2025/vacation/beach/sunset.jpg`:
+- `@dir1` = `beach`
+- `@dir2` = `vacation`
+- `@dir3` = `2025`
+- `@filename` = `sunset.jpg`
+- `@basename` = `sunset`
+- `@ext` = `jpg`
+
+**How it Works:**
+
+The tool automatically detects if a title or tag contains the `@` character and treats it as a template. Otherwise, it's used as a literal value.
+
+**Priority Order:**
+
+Title is determined in this order (first match wins):
+1. `-t, --title` flag (literal or template)
+2. `metadata.title` from config file (always a template)
+3. No title (default)
+
+Tags are cumulative and applied in this order:
+1. EXIF-based tags (from `exif_to_tags` config)
+2. `-g, --tags` flags (literal or templates, applied to all files)
+3. `metadata.tags` from config file (templates, applied to all files)
+
+**Example Use Cases:**
+
+```bash
+# Use directory name as part of title
+bckt-photo -i ~/Photos/2025/vacation/ -t "@dir2 - @basename"
+# Results in titles like: "2025 - sunset", "2025 - beach"
+
+# Tag by year and event
+bckt-photo -i ~/Photos/2025/vacation/ -g "@dir2" -g "@dir1"
+# Each photo gets tags: ["2025", "vacation"]
+
+# Create hierarchical tags
+bckt-photo -i ~/Photos/2025/summer/italy/ -g "@dir2/@dir1"
+# Each photo gets tag: "summer/italy"
+
+# Mix literal tags with template tags
+bckt-photo -i ~/Photos/2025/vacation/ -g travel -g "@dir2" -g "@dir1"
+# Each photo gets tags: ["travel", "2025", "vacation"]
+```
 
 ## Output
 

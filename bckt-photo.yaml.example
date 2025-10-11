@@ -4,6 +4,21 @@
 # Directory where blog posts will be created (optional, defaults to "posts")
 posts_dir: posts
 
+# Metadata templates - use @keywords to generate titles and tags from path
+# Keywords: @dir1 (closest directory to file), @dir2, @dir3, ..., @filename, @basename, @ext
+# Templates are automatically detected when they contain the @ character
+metadata:
+  # Title template - generates post title from path components
+  # Example: "Photos from @dir1" → "Photos from vacation"
+  # CLI flag -t takes priority over this setting
+  # title: "@dir1 - @basename"
+
+  # Tag templates - generates tags from path components (list)
+  # These are added to ALL posts, in addition to CLI -g flags and EXIF tags
+  # tags:
+  #   - "@dir1"        # Tag from closest directory
+  #   - "@dir2/@dir1"  # Tag from parent/child directories
+
 # Map EXIF fields to frontmatter field names
 # Format: fieldname: [list of EXIF tags to try in priority order]
 # The first EXIF tag that exists and has a value will be used

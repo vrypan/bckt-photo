@@ -9,6 +9,12 @@ import (
 type Config struct {
 	ExifToTags map[string][]string `yaml:"exif_to_tags"`
 	PostsDir   string              `yaml:"posts_dir"`
+	Metadata   MetadataConfig      `yaml:"metadata"`
+}
+
+type MetadataConfig struct {
+	Title string   `yaml:"title"` // Template string with @keywords
+	Tags  []string `yaml:"tags"`  // List of template strings with @keywords
 }
 
 func loadConfig(path string) (*Config, error) {

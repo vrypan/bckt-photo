@@ -32,11 +32,11 @@ var rootCmd = &cobra.Command{
 
 func init() {
 	rootCmd.Flags().StringVarP(&imageFile, "image", "i", "", "Path to image file or directory (required)")
-	rootCmd.Flags().StringVarP(&title, "title", "t", "", "Post title (optional, only used for single image)")
+	rootCmd.Flags().StringVarP(&title, "title", "t", "", "Post title (or template using @keywords like @dir1, @basename)")
 	rootCmd.Flags().StringVarP(&configFile, "config", "c", "bckt-photo.yaml", "Path to config file")
 	rootCmd.Flags().StringVarP(&postsDir, "posts", "p", "posts", "Posts directory")
 	rootCmd.Flags().StringVarP(&language, "lang", "l", "en", "Post language")
-	rootCmd.Flags().StringSliceVarP(&extraTags, "tags", "g", []string{}, "Extra tags to add to all posts (comma-separated or multiple flags)")
+	rootCmd.Flags().StringSliceVarP(&extraTags, "tags", "g", []string{}, "Tags (literal or templates with @keywords, comma-separated or multiple flags)")
 	rootCmd.MarkFlagRequired("image")
 
 	// Custom version template
@@ -72,7 +72,7 @@ func run(cmd *cobra.Command, args []string) error {
 
 	if fileInfo.IsDir() {
 		// Process directory
-		return processDirectory(imageFile, config, extraTags)
+		return processDirectory(imageFile, config, title, extraTags)
 	}
 
 	// Process single file
