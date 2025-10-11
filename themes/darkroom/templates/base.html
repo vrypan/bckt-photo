@@ -1,13 +1,69 @@
 <!doctype html>
 <html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>{% block page_title %}{{ config.title | default("darkroom") }}{% endblock page_title %}</title>
-<link rel="alternate" type="application/rss+xml" title="RSS" href="{{ base_url }}/rss.xml">
-<link rel="stylesheet" href="/style.css">
-{% block page_meta %}{% endblock page_meta %}
-</head>
+
+    <head>
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+        />
+        <title>
+            {%- block page_title -%}
+            {{ config.title | default("darkroom") }}
+            {%-endblock page_title -%}
+        </title>
+        <link
+            rel="alternate"
+            type="application/rss+xml"
+            title="RSS"
+            href="{{ base_url }}/rss.xml"
+        />
+        {% for tag in config.rss_tags %}
+        <link
+            rel="alternate"
+            type="application/rss+xml"
+            title="RSS for {{ tag }}"
+            href="{{ base_url }}/rss-{{ tag }}.xml"
+        />
+        {% endfor %}
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="/favicon-32x32.png"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="16x16"
+            href="/favicon-16x16.png"
+        />
+        <link
+            rel="apple-touch-icon"
+            sizes="180x180"
+            href="/apple-touch-icon.png"
+        />
+        <link rel="icon" href="/favicon.ico" />
+        <link rel="stylesheet" href="/style.css" />
+
+        {% block page_meta %}
+        <meta name="description" content="{{ config.description }}">
+        <meta property="og:site_name" content="{{ config.title | default("darkroom") }}">
+        <meta property="og:type" content="website">
+        <meta property="og:title" content="{{ config.title | default("darkroom") | trim }}">
+        <meta property="og:url" content="{{ base_url | safe }}">
+        <meta property="og:description" content="{{ config.description | trim}}">
+        <link rel="canonical" href="{{ base_url | safe }}">
+        <meta name="twitter:card" content="summary">
+        <meta name="twitter:title" content="{{ config.title | default("darkroom") | trim }}">
+        <meta name="twitter:description" content="{{ config.description | trim }}">
+        {% if config.open_graph_image %}
+        <meta property="og:image" content="{{ config.open_graph_image | safe}}"/>
+        <meta name="twitter:image" content="{{ config.open_graph_image | safe }}"/>
+        {% endif %}
+        {% endblock page_meta %}
+
+    </head>
 <body>
 <header>
 <h1><a href="/">{{ config.title | default("darkroom") }}</a></h1>

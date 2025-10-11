@@ -1,5 +1,7 @@
 title: My bckt Site
 base_url: https://example.com
+open_graph_image: /open-graph.png
+description: A beautiful photography blog
 homepage_posts: 20
 date_format: '[year]-[month]-[day]'
 paginate_tags: true
