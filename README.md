@@ -19,7 +19,29 @@ A command line tool written in Go that creates [bckt](https://github.com/vrypan/
 
 ## Installation
 
+### Homebrew (macOS/Linux)
+
 ```bash
+brew install vrypan/bckt-photo/bckt-photo
+```
+
+### Pre-built Binaries
+
+Download the latest release for your platform from the [releases page](https://github.com/vrypan/bckt-photo/releases).
+
+Extract and move the binary to your PATH:
+
+```bash
+# macOS/Linux
+tar -xzf bckt-photo_*.tar.gz
+sudo mv bckt-photo /usr/local/bin/
+```
+
+### Build from Source
+
+```bash
+git clone https://github.com/vrypan/bckt-photo.git
+cd bckt-photo
 go build -o bckt-photo
 ```
 
