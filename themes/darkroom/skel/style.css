@@ -427,3 +427,216 @@ a {
 a:hover {
 	color: var(--accent);
 }
+
+/* Search Page */
+.search-page {
+	max-width: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+.search-header {
+	padding: 2rem;
+	border-bottom: 1px solid var(--border);
+}
+
+.search-header .page-title {
+	font-size: 1.5rem;
+	font-weight: 400;
+	letter-spacing: 0.05em;
+	color: var(--text-primary);
+	margin: 0;
+}
+
+/* Search Panel */
+.search-panel {
+	padding: 2rem;
+	border-bottom: 1px solid var(--border);
+	background-color: var(--bg-darker);
+}
+
+.search-panel__row {
+	display: flex;
+	gap: 2rem;
+	align-items: flex-end;
+	margin-bottom: 1.5rem;
+}
+
+/* Search Field */
+.search-field {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+
+.search-field__label {
+	font-size: 0.875rem;
+	color: var(--text-secondary);
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+}
+
+.search-field__control {
+	position: relative;
+	display: flex;
+	align-items: center;
+}
+
+.search-field__icon {
+	position: absolute;
+	left: 1rem;
+	font-size: 1.25rem;
+	color: var(--text-muted);
+	pointer-events: none;
+}
+
+.search-field__input {
+	width: 100%;
+	padding: 1rem 1rem 1rem 3rem;
+	font-size: 1.125rem;
+	background-color: var(--bg-dark);
+	border: 1px solid var(--border);
+	color: var(--text-primary);
+	border-radius: 4px;
+	outline: none;
+	transition: border-color 0.2s ease;
+}
+
+.search-field__input:focus {
+	border-color: var(--text-secondary);
+}
+
+.search-field__input::placeholder {
+	color: var(--text-muted);
+}
+
+/* Search Sort */
+.search-sort {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	min-width: 150px;
+}
+
+.search-filter__label {
+	font-size: 0.875rem;
+	color: var(--text-secondary);
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+}
+
+.search-filter__select,
+.search-sort__select {
+	padding: 1rem;
+	font-size: 1rem;
+	background-color: var(--bg-dark);
+	border: 1px solid var(--border);
+	color: var(--text-primary);
+	border-radius: 4px;
+	outline: none;
+	cursor: pointer;
+	transition: all 0.2s ease;
+	appearance: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23999999' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+	background-repeat: no-repeat;
+	background-position: right 1rem center;
+	padding-right: 3rem;
+}
+
+.search-filter__select:hover,
+.search-sort__select:hover {
+	border-color: var(--text-muted);
+	background-color: rgba(255, 255, 255, 0.02);
+}
+
+.search-filter__select:focus,
+.search-sort__select:focus {
+	border-color: var(--text-secondary);
+	background-color: rgba(255, 255, 255, 0.03);
+}
+
+.search-filter__select option,
+.search-sort__select option {
+	background-color: var(--bg-dark);
+	color: var(--text-primary);
+	padding: 0.5rem;
+}
+
+/* Search Options Toggle */
+.search-panel__actions {
+	margin-bottom: 1rem;
+}
+
+.search-options__toggle {
+	padding: 0.5rem 1rem;
+	font-size: 0.875rem;
+	background-color: transparent;
+	border: 1px solid var(--border);
+	color: var(--text-secondary);
+	border-radius: 4px;
+	cursor: pointer;
+	transition: all 0.2s ease;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+}
+
+.search-options__toggle:hover {
+	border-color: var(--text-secondary);
+	color: var(--text-primary);
+}
+
+/* Search Filters */
+.search-filters {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+	gap: 1.5rem;
+	padding: 1.5rem;
+	background-color: var(--bg-dark);
+	border: 1px solid var(--border);
+	border-radius: 4px;
+	margin-bottom: 1.5rem;
+}
+
+.search-filters[hidden] {
+	display: none;
+}
+
+.search-filter {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+
+/* Search Status */
+.search-status {
+	font-size: 0.875rem;
+	color: var(--text-muted);
+	margin: 0;
+}
+
+/* Search Results */
+.search-results {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	padding: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+	.search-panel__row {
+		flex-direction: column;
+		gap: 1.5rem;
+	}
+
+	.search-sort {
+		width: 100%;
+	}
+
+	.search-filters {
+		grid-template-columns: 1fr;
+	}
+}

@@ -1,0 +1,24 @@
+<template data-search-result-template>
+  <article class="photo-card" data-search-card>
+    <a data-search-link href="" class="photo-link">
+      <div class="photo-image">
+        <img data-search-payload="image" data-search-payload-attr="src" alt="" loading="lazy">
+      </div>
+      <div class="photo-overlay">
+        <h3 data-search-title></h3>
+        <div class="camera-model">
+          <span data-search-payload="make"></span>
+          <span data-search-payload="camera"></span>
+        </div>
+        <div class="photo-specs">
+          <div data-search-payload="focal_length_friendly"></div>
+          <div data-search-payload="aperture_friendly"></div>
+          <div data-search-payload="exposure_friendly"></div>
+          <div data-search-payload="iso"></div>
+          -
+          <time data-search-date datetime=""></time>
+        </div>
+      </div>
+    </a>
+  </article>
+</template>

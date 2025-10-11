@@ -29,11 +29,11 @@ Thumbs.db
 .bckt/
 bckt-spec.md
 bckt.yaml
-html/
-pages/
-photo.jpeg
-photos/
+/html/
+/pages/
+/photo.jpeg
+/photos/
 /skel/
 /templates/
-themes/bckt3/
-themes/plain/
+/themes/bckt3/
+/themes/plain/
