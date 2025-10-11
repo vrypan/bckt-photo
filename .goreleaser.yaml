@@ -8,7 +8,7 @@ before:
 builds:
   - id: bckt-photo
     binary: bckt-photo
-    main: ./main.go
+    main: .
     env:
       - CGO_ENABLED=0
     goos:
@@ -55,7 +55,7 @@ brews:
       owner: vrypan
       name: homebrew-bckt-photo
       token: "{{ .Env.GITHUB_TOKEN }}"
-    folder: Formula
+    directory: Formula
     homepage: https://github.com/vrypan/bckt-photo
     description: "A photo processing tool for bckt"
     license: MIT
