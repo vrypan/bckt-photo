@@ -54,7 +54,7 @@ brews:
     repository:
       owner: vrypan
       name: homebrew-bckt-photo
-      token: "{{ .Env.TAP_GITHUB_TOKEN }}"
+      token: "{{ .Env.GITHUB_TOKEN }}"
     directory: Formula
     homepage: https://github.com/vrypan/bckt-photo
     description: "A photo processing tool for bckt"
