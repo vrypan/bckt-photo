@@ -1,6 +1,6 @@
 # bckt-photo
 
-A command line tool written in Go that creates [bckt](https://github.com/vrypan/bckt) blog posts from image files using EXIF data.
+A command line tool written that creates [bckt](https://github.com/vrypan/bckt) blog posts from image files using their EXIF data.
 
 ## Features
 
